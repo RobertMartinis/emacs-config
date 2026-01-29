@@ -155,7 +155,8 @@
         +roam2               ; create a personal wiki
         +pretty              ; replace asterisks with pretty org bullets
         +publish
-        +hugo)            ; create static websites with org
+        +hugo
+        +dragndrop)            ; create static websites with org
        php               ; perl's insecure younger brother
        ;;plantuml          ; diagrams for confusing people more
        ;;purescript        ; javascript, but functional

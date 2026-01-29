@@ -416,7 +416,7 @@
 
 (map! :leader
       (:prefix ("n r" . "org-roam")
-       :desc "Completion at point" "c" #'completion-at-point
+ :desc "Completion at point" "c" #'completion-at-point
        :desc "Find node"           "f" #'org-roam-node-find
        :desc "Show graph"          "g" #'org-roam-graph
        :desc "Insert node"         "i" #'org-roam-node-insert
@@ -425,6 +425,34 @@
 
 (setq org-hugo-base-dir "~/Documents/hugo-web"
       org-hugo-default-section-directory "post")
+
+(after! org
+  (defun my/org-hugo-bundle ()
+    (cadr (assoc "HUGO_BUNDLE"
+                 (org-collect-keywords '("HUGO_BUNDLE")))))
+
+  (defun my/org-notes-images-dir ()
+    (let* ((orgfile (buffer-file-name))
+           (bundle (my/org-hugo-bundle)))
+      (when (and orgfile bundle)
+        (expand-file-name (format "images/%s" bundle)
+                          (file-name-directory orgfile))))))
+
+(with-eval-after-load 'org-download
+  (setq org-download-link-format "[[file:%s]]\n"
+        org-download-abbreviate-filename-function #'file-relative-name
+        org-download-heading-lvl nil
+        org-download-screenshot-method "wl-paste --no-newline --type image/png > %s")
+
+  (defun my/org-download--force-directory (orig-fn &rest args)
+    (let* ((dir (or (my/org-notes-images-dir) org-download-image-dir))
+           (org-download-method 'directory)
+           (org-download-image-dir dir))
+      (when dir (make-directory dir t))
+      (apply orig-fn args)))
+
+  (advice-add 'org-download-clipboard :around #'my/org-download--force-directory)
+  (advice-add 'org-download-screenshot :around #'my/org-download--force-directory))
 
 (map! :leader
       :desc "Switch to perspective NAME"       "DEL" #'persp-switch

@@ -10,7 +10,11 @@
      "720838034f1dd3b3da66f6bd4d053ee67c93a747b219d1c546c41c4e425daf93"
      "0325a6b5eea7e5febae709dab35ec8648908af12cf2d2b569bedc8da0a3a81c1"
      "f1e8339b04aef8f145dd4782d03499d9d716fdc0361319411ac2efc603249326"
-     "3061706fa92759264751c64950df09b285e3a2d3a9db771e99bcbb2f9b470037" default)))
+     "3061706fa92759264751c64950df09b285e3a2d3a9db771e99bcbb2f9b470037" default))
+ '(safe-local-variable-values
+   '((org-download-image-dir . ".") (org-download-image-dir . "First")
+     (org-download-heading-lvl) (org-download-image-dir . "first")
+     (org-download-method . directory))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
