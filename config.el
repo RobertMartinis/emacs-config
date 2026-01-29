@@ -423,6 +423,9 @@
        :desc "Capture to node"     "n" #'org-roam-capture
        :desc "Toggle roam buffer"  "r" #'org-roam-buffer-toggle))
 
+(setq org-hugo-base-dir "~/Documents/hugo-web"
+      org-hugo-default-section-directory "post")
+
 (map! :leader
       :desc "Switch to perspective NAME"       "DEL" #'persp-switch
       :desc "Switch to buffer in perspective"  "," #'persp-switch-to-buffer
