@@ -426,6 +426,12 @@
 (setq org-hugo-base-dir "~/Documents/hugo-web"
       org-hugo-default-section-directory "post")
 
+(defun my/hugo-server ()
+  ;; Run Hugo server from ~/Documents/hugo-web using compile.
+  (interactive)
+  (let ((default-directory (expand-file-name "~/Documents/hugo-web/")))
+    (compile "hugo server -D --disableFastRender")))
+
 (after! org
   (defun my/org-hugo-bundle ()
     (cadr (assoc "HUGO_BUNDLE"
