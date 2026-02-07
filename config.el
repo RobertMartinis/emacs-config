@@ -438,16 +438,23 @@
                  (org-collect-keywords '("HUGO_BUNDLE")))))
 
   (defun my/org-notes-images-dir ()
+    "Return absolute path to images folder for this page bundle.
+If Org file already sits in the bundle directory, use ./images/.
+Otherwise use ./images/<bundle>/."
     (let* ((orgfile (buffer-file-name))
            (bundle (my/org-hugo-bundle)))
       (when (and orgfile bundle)
-        (expand-file-name (format "images/%s" bundle)
-                          (file-name-directory orgfile))))))
+        (let* ((basedir (file-name-directory orgfile))
+               (dirname (file-name-nondirectory (directory-file-name basedir))))
+          (if (string= dirname bundle)
+              (expand-file-name "images" basedir) ; bundle/images/...
+            (expand-file-name (format "images/%s" bundle) basedir)))))))
 
 (with-eval-after-load 'org-download
   (setq org-download-link-format "[[file:%s]]\n"
         org-download-abbreviate-filename-function #'file-relative-name
         org-download-heading-lvl nil
+        ;; Wayland clipboard -> PNG file (used by org-download-clipboard)
         org-download-screenshot-method "wl-paste --no-newline --type image/png > %s")
 
   (defun my/org-download--force-directory (orig-fn &rest args)

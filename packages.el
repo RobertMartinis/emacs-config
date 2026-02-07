@@ -98,3 +98,4 @@
 (package! elfeed-tube-mpv)
 (package! all-the-icons-dired)
 (package! xclip)
+(package! org-roam-ui)
